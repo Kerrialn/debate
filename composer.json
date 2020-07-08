@@ -38,6 +38,16 @@
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*"
     },
+    "scripts": {
+        "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify",
+        "check-cs": "vendor/bin/ecs check --ansi",
+        "fix-cs": [
+            "vendor/bin/ecs check --fix --ansi",
+            "bin/clear_posts_trailing_whitespaces.sh"
+        ],
+        "check-status": "vendor/bin/http-status-check scan https://tomasvotruba.com --output invalid-links.txt --ansi",
+        "rector": "vendor/bin/rector process --config rector-ci.yaml --ansi --dry-run"
+    },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": {
