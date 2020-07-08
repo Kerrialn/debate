@@ -46,7 +46,7 @@
             "bin/clear_posts_trailing_whitespaces.sh"
         ],
         "check-status": "vendor/bin/http-status-check scan https://tomasvotruba.com --output invalid-links.txt --ansi",
-        "rector": "vendor/bin/rector process --config rector-ci.yaml --ansi --dry-run"
+        "rector": "vendor/bin/rector process --dry-run"
     },
     "config": {
         "optimize-autoloader": true,
