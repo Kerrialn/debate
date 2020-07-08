@@ -13,4 +13,5 @@ jobs:
             php-version: 7.4
             coverage: none
 
+      -   run: composer validate
       -   run: composer install --no-progress
