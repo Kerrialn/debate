@@ -1,0 +1,13 @@
+# rector.yaml
+parameters:
+  paths:
+    - src
+
+  sets:
+    - 'code-quality'
+    - 'php71'
+    - 'php72'
+    - 'php73'
+    - 'php74'
+    - 'dead-code'
+    - 'solid'

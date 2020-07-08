@@ -1,0 +1,14 @@
+image: 'php:latest'
+
+stages:
+  - test
+
+phpUnit:
+  stage: test
+  script:
+    - vendor/bin/phpunit
+
+phpStan:
+  stage: test
+  script:
+    - 'vendor/bin/phpstan analyse --ansi'
