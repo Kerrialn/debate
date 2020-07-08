@@ -171,7 +171,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1594234761119</updated>
-      <workItem from="1594234767015" duration="3249000" />
+      <workItem from="1594234767015" duration="3504000" />
     </task>
     <servers />
   </component>
@@ -183,9 +183,9 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="378" y="154" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.800@0.0.1280.800" timestamp="1594236155142" />
-    <state width="500" height="400" key="SwitcherDM" timestamp="1594239100970">
+    <state width="500" height="400" key="SwitcherDM" timestamp="1594239208493">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="500" height="400" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1594239100970" />
+    <state width="500" height="400" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1594239208493" />
   </component>
 </project>

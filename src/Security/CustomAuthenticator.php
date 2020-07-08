@@ -20,16 +20,24 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class CustomAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+final class CustomAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
 
-    private $entityManager;
-    private $urlGenerator;
-    private $csrfTokenManager;
-    private $passwordEncoder;
+    private \Doctrine\ORM\EntityManagerInterface $entityManager;
+    private \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator;
+    private \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager;
+    private \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $passwordEncoder;
+    /**
+     * @var string
+     */
+    private const EMAIL = 'email';
+    /**
+     * @var string
+     */
+    private const PASSWORD = 'password';
 
     public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -48,13 +56,13 @@ class CustomAuthenticator extends AbstractFormLoginAuthenticator implements Pass
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'email' => $request->request->get('email'),
-            'password' => $request->request->get('password'),
+            self::EMAIL => $request->request->get(self::EMAIL),
+            self::PASSWORD => $request->request->get(self::PASSWORD),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['email']
+            $credentials[self::EMAIL]
         );
 
         return $credentials;
@@ -67,7 +75,7 @@ class CustomAuthenticator extends AbstractFormLoginAuthenticator implements Pass
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([self::EMAIL => $credentials[self::EMAIL]]);
 
         if (!$user) {
             // fail authentication with a custom error
@@ -79,7 +87,7 @@ class CustomAuthenticator extends AbstractFormLoginAuthenticator implements Pass
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        return $this->passwordEncoder->isPasswordValid($user, $credentials[self::PASSWORD]);
     }
 
     /**
@@ -87,7 +95,7 @@ class CustomAuthenticator extends AbstractFormLoginAuthenticator implements Pass
      */
     public function getPassword($credentials): ?string
     {
-        return $credentials['password'];
+        return $credentials[self::PASSWORD];
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
